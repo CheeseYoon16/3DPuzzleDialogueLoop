@@ -9,9 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: afcaaa7c39422f4408e48789745f7191, type: 3}
-  m_Name: DialogueSequenceData
+  m_Script: {fileID: 11500000, guid: 1b48d0110ce746541a3d511b041adac0, type: 3}
+  m_Name: CDCorrectItem 2
   m_EditorClassIdentifier: 
-  listOfDialogue:
-  - {fileID: 11400000, guid: 7b66d0ef37b1c804f8400772a693c42a, type: 2}
-  - {fileID: 11400000, guid: fca2ad1ab99bb5b4a9e93f993d179b27, type: 2}
+  name: Clara
+  sentences:
+  - OMG!
+  - You did find my watch!

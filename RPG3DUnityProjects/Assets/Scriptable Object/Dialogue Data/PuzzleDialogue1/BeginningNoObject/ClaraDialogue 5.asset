@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b48d0110ce746541a3d511b041adac0, type: 3}
+  m_Name: ClaraDialogue 5
+  m_EditorClassIdentifier: 
+  name: Clara
+  sentences:
+  - Well, there's this precious watch of mine that my Grandma gave me on my birthday
+    before she passed away.
+  - And it lost when I ran away to get to a safer place.
+  - If you can find my watch, I might consider to give the key to you.

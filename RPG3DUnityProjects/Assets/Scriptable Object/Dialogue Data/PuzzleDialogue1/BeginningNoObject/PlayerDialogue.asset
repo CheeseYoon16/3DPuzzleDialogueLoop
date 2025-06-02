@@ -14,5 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Player
   sentences:
-  - Wut
-  - Bye
+  - A watch?
+  - Alright, I find the watch, you give me the key. That's the deal.
+  - Wait here.
