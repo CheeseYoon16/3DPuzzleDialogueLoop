@@ -9,7 +9,7 @@ public class NPCWalkController : MonoBehaviour
 {
     public LayerMask movementMask;
 
-    PlayerMotor motor;
+    PlayerController charControl;
 
     bool disabledMovement = false;
 
@@ -26,16 +26,17 @@ public class NPCWalkController : MonoBehaviour
     private void Start()
     {
         startPos = transform.position;
-        motor = GetComponent<PlayerMotor>();
+
+        charControl = GetComponent<PlayerController>();
     }
 
     void Update()
     {
         if (!disabledMovement && gameCanStart)
         {
-            if (TargetDestination != null && motor != null)
+            if (TargetDestination != null && charControl != null)
             {
-                motor.MoveToPoint(TargetDestination.transform.position);
+                charControl.MoveToPoint(TargetDestination.transform.position);
             }
 
         }

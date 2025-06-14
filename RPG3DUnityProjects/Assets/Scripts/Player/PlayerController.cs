@@ -8,14 +8,16 @@ public class PlayerController : MonoBehaviour
 {
     public LayerMask movementMask;
 
-    PlayerMotor motor;
-
     bool disabledMovement = false;
+    NavMeshAgent agent;
 
-    void Start()
+    [SerializeField] Animator characterAnimator;
+
+    private void OnEnable()
     {
-       motor = GetComponent<PlayerMotor>();
+       agent = GetComponent<NavMeshAgent>();
     }
+
     void Update()
     {
         if(!disabledMovement)
@@ -27,7 +29,7 @@ public class PlayerController : MonoBehaviour
 
                 if (Physics.Raycast(ray, out hit, 100, movementMask))
                 {
-                    motor.MoveToPoint(hit.point);
+                    MoveToPoint(hit.point);
                 }
             }
 
@@ -38,7 +40,7 @@ public class PlayerController : MonoBehaviour
 
                 if (Physics.Raycast(ray, out hit))
                 {
-                    motor.MoveToPoint(hit.point);
+                    MoveToPoint(hit.point);
                 }
             }
 
@@ -46,12 +48,33 @@ public class PlayerController : MonoBehaviour
             {
                 OpenInventory();
             }
+
+            if(agent!=null)
+            {
+                Vector3 worldVelocity = agent.velocity;
+
+                // Convert world velocity to local direction (relative to character's forward)
+                Vector3 localVelocity = transform.InverseTransformDirection(worldVelocity);
+
+                // Set parameters for blend tree
+                float speed = worldVelocity.magnitude;
+                float directionX = localVelocity.x;
+                float directionZ = localVelocity.z;
+
+                characterAnimator.SetFloat(AnimationParamHolder.CharacterParam.CURRENT_SPEED_PARAM, speed);
+                characterAnimator.SetFloat(AnimationParamHolder.CharacterParam.DIRECTION_X_PARAM, directionX);
+                characterAnimator.SetFloat(AnimationParamHolder.CharacterParam.DIRECTION_Z_PARAM, directionZ);
+            }
         }
     }
 
     public void SetMovementDisabled(bool active)
     {
         disabledMovement = active;
+        if(disabledMovement)
+        {
+            SetAnimFloatParam(AnimationParamHolder.CharacterParam.CURRENT_SPEED_PARAM, 0);
+        }
     }
 
     private void OpenInventory()
@@ -62,5 +85,20 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-        
+    public void MoveToPoint(Vector3 point)
+    {
+        if (disabledMovement) return;
+        if (agent == null) return;
+
+        agent.SetDestination(point);
+    }
+
+    public void SetAnimFloatParam(string param, float value)
+    { 
+        if(characterAnimator != null)
+        {
+            characterAnimator.SetFloat(param, value);
+        }
+    }
+
 }
