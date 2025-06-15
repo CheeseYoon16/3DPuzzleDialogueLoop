@@ -5,34 +5,70 @@ using Unity.VisualScripting;
 public class PlayerInteraction : MonoBehaviour
 {
     [SerializeField] private float detectionRadius = 5f;
-    private InteractableObject currentInteractable = null;
+    [SerializeField] InteractPromptUI interactPromptUI = null;
+
+    private InteractableObject detectedObject;
+
+    private InteractableObject currentInteractable
+    {
+        get
+        {
+            return detectedObject;
+        }
+        set
+        {
+            if(value!=null)
+            {
+                Debug.Log($"Detected interactible object {value.gameObject.name}");
+            }
+
+            if(detectedObject != null)
+            {
+                if (detectedObject != value)
+                {
+                    detectedObject.SetToInteractable(false);
+                }
+            }
+
+            detectedObject = value;
+
+            if (detectedObject != null)
+            {
+                detectedObject.SetToInteractable(true);
+            }
+        }
+    }
+
     bool disabledInteraction= false;
 
     void DetectObject()
     {
         Collider[] hitColliders = Physics.OverlapSphere(this.transform.position, detectionRadius);
+        InteractableObject foundInteractable = null;
+
         foreach (var hitCollider in hitColliders)
-        { 
-            if (hitCollider.GetComponent<InteractableObject>() != null) //this to check if the object with collider can be interacted
+        {
+            if (hitCollider.TryGetComponent(out InteractableObject targetObject))
             {
-                InteractableObject targetObject = hitCollider.GetComponent<InteractableObject>(); //this to get the script or logic that handles the interaction.
-
-                if (currentInteractable != null)
-                {
-                    if (targetObject != currentInteractable)
-                    {
-                        ShowPrompt(false);
-                    }
-                }
-
-                ShowPrompt(true);
-                currentInteractable = targetObject;
+                foundInteractable = targetObject;
                 break;
             }
-
-            currentInteractable = null;
-            ShowPrompt(false);
         }
+
+        // Show or hide prompt based on presence
+        InteractionPromptData currentPrompt = null;
+        Vector3 position = Vector3.zero;
+        if(foundInteractable != null)
+        {
+            currentPrompt = foundInteractable.PromptData;
+            position = foundInteractable.transform.position;
+        }
+
+        ShowPrompt(foundInteractable != null, position, currentPrompt);
+
+        // Assign detected interactable (this will automatically handle outline toggling)
+        currentInteractable = foundInteractable;
+
     }
 
     private void Interact()
@@ -43,12 +79,16 @@ public class PlayerInteraction : MonoBehaviour
         }
     }
 
-    private void ShowPrompt(bool show)
+    private void ShowPrompt(bool show, Vector3 pos , InteractionPromptData promptData = null)
     {
-        if(InteractButtonPrompt.Instance!= null)
+        if(!disabledInteraction)
         {
-            InteractButtonPrompt.Instance.ShowPrompt(show);
+            if (interactPromptUI != null)
+            {
+                interactPromptUI.SetPromptEnabled(show, pos, promptData);
+            }
         }
+
     }
 
     private void Update()
