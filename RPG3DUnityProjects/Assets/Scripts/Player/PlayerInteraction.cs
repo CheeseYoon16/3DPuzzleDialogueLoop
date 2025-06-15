@@ -81,10 +81,14 @@ public class PlayerInteraction : MonoBehaviour
 
     private void ShowPrompt(bool show, Vector3 pos , InteractionPromptData promptData = null)
     {
-        if(interactPromptUI != null)
+        if(!disabledInteraction)
         {
-            interactPromptUI.SetPromptEnabled(show, pos, promptData);
+            if (interactPromptUI != null)
+            {
+                interactPromptUI.SetPromptEnabled(show, pos, promptData);
+            }
         }
+
     }
 
     private void Update()
