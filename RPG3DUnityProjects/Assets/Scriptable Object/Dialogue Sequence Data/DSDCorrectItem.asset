@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: afcaaa7c39422f4408e48789745f7191, type: 3}
+  m_Name: DSDCorrectItem
+  m_EditorClassIdentifier: 
+  listOfDialogue:
+  - {fileID: 11400000, guid: 82606dc8c7d28e34bbb8dd49f01e418b, type: 2}
+  - {fileID: 11400000, guid: cf90f8c40f578e84cacd0c51b6f386b2, type: 2}
+  - {fileID: 11400000, guid: e0d1837f961331145af726ea077202b9, type: 2}
+  - {fileID: 11400000, guid: 346165006a754bc40b1f336fb3399c85, type: 2}
+  - {fileID: 11400000, guid: b6dbbb8c355f8814db4e1e717347699d, type: 2}
+  - {fileID: 11400000, guid: 7cc0881d31b66a24cb43909a0849c00a, type: 2}
+  - {fileID: 11400000, guid: 747d0f8df7191e74591d526d4676308a, type: 2}
+  - {fileID: 11400000, guid: 5914029ebd3023a4d9577ae6ae98a519, type: 2}

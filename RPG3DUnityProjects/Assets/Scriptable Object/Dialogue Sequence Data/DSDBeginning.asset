@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: afcaaa7c39422f4408e48789745f7191, type: 3}
+  m_Name: DSDBeginning
+  m_EditorClassIdentifier: 
+  listOfDialogue:
+  - {fileID: 11400000, guid: fca2ad1ab99bb5b4a9e93f993d179b27, type: 2}
+  - {fileID: 11400000, guid: 5957b523846295f46bef3d43ca0a60e4, type: 2}
+  - {fileID: 11400000, guid: 6cb05dbd66c964f4dbb792ac0216527a, type: 2}
+  - {fileID: 11400000, guid: 3ec95ba144d2250469625137895c7b47, type: 2}
+  - {fileID: 11400000, guid: 5ecc4fc3b3fdcef4f9161e50f2403bcb, type: 2}
+  - {fileID: 11400000, guid: 583403ee04ecf694e8e46b696761438d, type: 2}
+  - {fileID: 11400000, guid: f01d5b69b2ebb784f9bdb4724538513b, type: 2}
+  - {fileID: 11400000, guid: a49b0796070ad4b488569db622e3a36f, type: 2}
+  - {fileID: 11400000, guid: fc3c22b5f5bb86b44a75e835bfce997d, type: 2}
+  - {fileID: 11400000, guid: 7b66d0ef37b1c804f8400772a693c42a, type: 2}
