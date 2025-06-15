@@ -50,10 +50,6 @@ public class DialogueManager : MonoBehaviour
         if(currentDialogueCorout == null)
         {
             DialogueData FirstDialogue = trackConversation.listOfDialogue[currentConversationindex];
-            if (InteractButtonPrompt.Instance != null)
-            {
-                InteractButtonPrompt.Instance.ShowPrompt(false);
-            }
 
             onConversationFinished = conversationFinishedAction;
 
