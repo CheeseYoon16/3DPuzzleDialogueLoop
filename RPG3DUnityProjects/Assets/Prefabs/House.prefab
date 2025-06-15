@@ -7839,6 +7839,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  outlineMaterial: {fileID: 0}
 --- !u!114 &8384356500982598813
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8108,6 +8109,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  outlineMaterial: {fileID: 2100000, guid: 9cea20d92784d0d44a100b6fddecf481, type: 2}
 --- !u!114 &8384356501626774610
 MonoBehaviour:
   m_ObjectHideFlags: 0
