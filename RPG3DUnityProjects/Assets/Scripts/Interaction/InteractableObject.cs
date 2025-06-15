@@ -8,7 +8,10 @@ public class InteractableObject : MonoBehaviour
 {
     public UnityEvent onInteracted;
     [SerializeField] Material outlineMaterial;
+    [SerializeField] InteractionPromptData promptData;
     MeshRenderer meshRenderer;
+
+    public InteractionPromptData PromptData { get { return promptData; } }
 
     private void OnEnable()
     {
