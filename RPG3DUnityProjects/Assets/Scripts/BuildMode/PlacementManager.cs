@@ -73,6 +73,18 @@ namespace TuruSore.BuildMode
         {
             return placementGrid.GetAllAdjacentCellTypes(position.x, position.z);
         }
+
+        internal List<Vector3Int> GetNeighboursOfTypesFor(Vector3Int position, CellType celltype)
+        {
+            var neighborVertices = placementGrid.GetAdjacentCellsOfType(position.x, position.z, celltype);
+            List<Vector3Int> neighbors = new List<Vector3Int>();
+            foreach(var point in neighborVertices)
+            {
+                neighbors.Add(new Vector3Int(point.X, 0, point.Y));
+            }
+
+            return neighbors;
+        }
     }
 }
 

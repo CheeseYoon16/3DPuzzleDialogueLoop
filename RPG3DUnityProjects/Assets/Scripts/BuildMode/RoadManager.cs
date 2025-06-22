@@ -11,6 +11,7 @@ namespace TuruSore.BuildMode
         public PlacementManager placementManager;
 
         public List<Vector3Int> tmpPlacementPost = new List<Vector3Int>();
+        public List<Vector3Int> roadPositionsRecheckList = new List<Vector3Int>();
 
         public GameObject roadStraight;
         public RoadFixer roadFixer;
@@ -54,6 +55,20 @@ namespace TuruSore.BuildMode
                 foreach (var tmpPos in tmpPlacementPost)
                 {
                     roadFixer.FixRoadAtPosition(placementManager, tmpPos);
+                    var neighbors = placementManager.GetNeighboursOfTypesFor(tmpPos, CellType.Road);
+
+                    foreach(var roadPos in neighbors)
+                    {
+                        if(!roadPositionsRecheckList.Contains(roadPos))
+                        {
+                            roadPositionsRecheckList.Add(roadPos);
+                        }
+                    }
+                }
+
+                foreach(var positionToFix in roadPositionsRecheckList)
+                {
+                    roadFixer.FixRoadAtPosition(placementManager, positionToFix);
                 }
             }
 
