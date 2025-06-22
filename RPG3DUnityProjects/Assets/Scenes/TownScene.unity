@@ -5095,6 +5095,7 @@ GameObject:
   m_Component:
   - component: {fileID: 468852730}
   - component: {fileID: 468852731}
+  - component: {fileID: 468852732}
   m_Layer: 0
   m_Name: RoadManager
   m_TagString: Untagged
@@ -5133,6 +5134,26 @@ MonoBehaviour:
   tmpPlacementPost: []
   roadStraight: {fileID: 5661862354351878554, guid: 0cf01c743836d154eb47042e1bc62afd,
     type: 3}
+  roadFixer: {fileID: 468852732}
+--- !u!114 &468852732
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 468852729}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17904a887b86fac40be87c5cf620c57f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  deadEnd: {fileID: 1120765361980748800, guid: 126bc1b54aa974c45b523eabbb58d51e, type: 3}
+  roadStraight: {fileID: 5661862354351878554, guid: 0cf01c743836d154eb47042e1bc62afd,
+    type: 3}
+  corner: {fileID: 7077802812573144028, guid: fd4c97eb7b86f1149a7745204ed8904e, type: 3}
+  threeway: {fileID: 2384947387477557946, guid: 2524a8437a2d4394da7f7a0546a71f3d,
+    type: 3}
+  fourway: {fileID: 3351635067702010651, guid: f4402828bce58b54791119f89fa2df61, type: 3}
 --- !u!1001 &487249278
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -23353,10 +23374,45 @@ PrefabInstance:
       propertyPath: moveSpeed
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 7863853561991043147, guid: 14a32881bc09b724aa3d7033672921c5,
+        type: 3}
+      propertyPath: m_FollowOffset.y
+      value: 7.19
+      objectReference: {fileID: 0}
+    - target: {fileID: 7863853562110442645, guid: 14a32881bc09b724aa3d7033672921c5,
+        type: 3}
+      propertyPath: m_Lens.FieldOfView
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 7863853562110442645, guid: 14a32881bc09b724aa3d7033672921c5,
         type: 3}
       propertyPath: m_Lens.OrthographicSize
       value: 4.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 7863853562110442646, guid: 14a32881bc09b724aa3d7033672921c5,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 7.19
+      objectReference: {fileID: 0}
+    - target: {fileID: 7863853562110442646, guid: 14a32881bc09b724aa3d7033672921c5,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.9518191
+      objectReference: {fileID: 0}
+    - target: {fileID: 7863853562110442646, guid: 14a32881bc09b724aa3d7033672921c5,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.3066601
+      objectReference: {fileID: 0}
+    - target: {fileID: 7863853562110442646, guid: 14a32881bc09b724aa3d7033672921c5,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.00000001661667
+      objectReference: {fileID: 0}
+    - target: {fileID: 7863853562110442646, guid: 14a32881bc09b724aa3d7033672921c5,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.0000000053536136
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 14a32881bc09b724aa3d7033672921c5, type: 3}
@@ -26030,7 +26086,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 60.000004
+  field of view: 15
   orthographic: 0
   orthographic size: 4.7
   m_Depth: -1
@@ -26055,8 +26111,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2044889009}
-  m_LocalRotation: {x: 0.43159828, y: 0, z: 0, w: 0.90206593}
-  m_LocalPosition: {x: 5.3, y: 12.41, z: -4.8}
+  m_LocalRotation: {x: 0.3066601, y: -0.00000001661667, z: 0.000000005353612, w: 0.9518191}
+  m_LocalPosition: {x: 5.3, y: 7.19, z: -4.8}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

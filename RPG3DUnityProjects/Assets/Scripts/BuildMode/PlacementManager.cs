@@ -10,6 +10,8 @@ namespace TuruSore.BuildMode
         public int width, height;
         Grid placementGrid;
 
+        private Dictionary<Vector3Int, StructureModel> tmpRoadObjects = new Dictionary<Vector3Int, StructureModel>();
+
         private void OnEnable()
         {
             placementGrid = new Grid(width, height);
@@ -35,11 +37,41 @@ namespace TuruSore.BuildMode
             return placementGrid[position.x, position.z] == celltype;
         }
 
-        internal void PlaceTemporaryStructure(Vector3Int position, GameObject roadStraight, CellType cellType)
+        internal void PlaceTemporaryStructure(Vector3Int position, GameObject structPrefab, CellType cellType)
         {
             placementGrid[position.x, position.z] = cellType;
 
-            GameObject newStruct = Instantiate(roadStraight, position, Quaternion.identity);
+            StructureModel structure = CreateNewStructureModel(position, structPrefab, cellType);
+
+            if(!tmpRoadObjects.ContainsKey(position))
+            {
+                tmpRoadObjects.Add(position, structure);
+            }
+        }
+
+        private StructureModel CreateNewStructureModel(Vector3Int position, GameObject structPrefab, CellType cellType)
+        {
+            GameObject structure = new GameObject(cellType.ToString());
+            structure.transform.SetParent(transform);
+            structure.transform.localPosition = position;
+            var structureModel = structure.AddComponent<StructureModel>();
+
+            structureModel.CreateModel(structPrefab);
+
+            return structureModel;
+        }
+
+        public void ModifyStructureModel(Vector3Int position, GameObject newModel, Quaternion rotation)
+        {
+            if(tmpRoadObjects.ContainsKey(position))
+            {
+                tmpRoadObjects[position].SwapModel(newModel, rotation);
+            }
+        }
+
+        internal CellType[] GetNeighbourTypesFor(Vector3Int position)
+        {
+            return placementGrid.GetAllAdjacentCellTypes(position.x, position.z);
         }
     }
 }

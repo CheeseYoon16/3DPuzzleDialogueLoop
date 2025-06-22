@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.Experimental.GraphView;
@@ -12,6 +13,15 @@ namespace TuruSore.BuildMode
         public List<Vector3Int> tmpPlacementPost = new List<Vector3Int>();
 
         public GameObject roadStraight;
+        public RoadFixer roadFixer;
+
+        private void OnEnable()
+        {
+            if(roadFixer == null)
+            {
+                roadFixer = GetComponent<RoadFixer>();
+            }
+        }
 
         public void PlaceRoad(Vector3Int position)
         {
@@ -27,7 +37,24 @@ namespace TuruSore.BuildMode
                     return;
                 }
 
+                tmpPlacementPost.Clear();
+                tmpPlacementPost.Add(position);
+
                 placementManager.PlaceTemporaryStructure(position, roadStraight, CellType.Road);
+
+                FixRoadPrefab();
+            }
+
+        }
+
+        private void FixRoadPrefab()
+        {
+            if(roadFixer!=null)
+            {
+                foreach (var tmpPos in tmpPlacementPost)
+                {
+                    roadFixer.FixRoadAtPosition(placementManager, tmpPos);
+                }
             }
 
         }
