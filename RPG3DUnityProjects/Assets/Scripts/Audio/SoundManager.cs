@@ -17,7 +17,7 @@ public enum SoundType
 public class SoundManager : MonoBehaviour
 {
     [SerializeField] SoundList[] soundList;
-    private static SoundManager instance;
+    public static SoundManager instance;
     private AudioSource audioSource;
 
     private void Awake()
@@ -38,7 +38,7 @@ public class SoundManager : MonoBehaviour
     }
 
 
-    public static void PlaySound(SoundType soundType, String name)
+    public void PlaySound(SoundType soundType, String name)
     {
         SoundList list = instance.soundList[(int)soundType];
 

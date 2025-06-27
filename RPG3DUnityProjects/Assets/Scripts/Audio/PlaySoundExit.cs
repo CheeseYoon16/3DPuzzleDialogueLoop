@@ -10,6 +10,6 @@ public class PlaySoundExit : StateMachineBehaviour
 
     public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        SoundManager.PlaySound(sound, soundName);
+        SoundManager.instance.PlaySound(sound, soundName);
     }
 }
