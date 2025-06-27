@@ -2,11 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using TMPro;
 
 public class RadialMenuController : MonoBehaviour
 {
-    [SerializeField] List<RadialMenuItem> radialMenuOptions = new List<RadialMenuItem>();
+    [SerializeField] List<RadialMenuItemData> radialMenuOptions = new List<RadialMenuItemData>();
     [SerializeField] Transform parentTransform = null;
+    [SerializeField] TextMeshProUGUI descriptionText;
+    [SerializeField] GameObject detailGameobject;
+    [SerializeField] RadialMenuItem itemOptionTemplate;
 
     public Vector2 normalizedMousePosition;
     float currentAngle;
@@ -43,14 +47,24 @@ public class RadialMenuController : MonoBehaviour
 
         for (int i = 0; i < radialMenuOptions.Count; i++)
         {
-            RadialMenuItem spawned = Instantiate(radialMenuOptions[i], ParentTransform);
-            spawned.Init(i, sizeDelta);
+            RadialMenuItem spawned = Instantiate(itemOptionTemplate, ParentTransform);
+            spawned.Init(radialMenuOptions[i], i, sizeDelta);
             spawned.transform.localRotation = Quaternion.Euler(0, 0, angleStep * i);
 
             if(!currentActiveOptions.ContainsKey(i))
             {
                 currentActiveOptions.Add(i, spawned);
             }
+
+            spawned.onSelected?.AddListener((x) =>
+            {
+                SetDescription(x.Description);
+            });
+        }
+
+        if(detailGameobject!=null)
+        {
+            detailGameobject.transform.SetAsLastSibling();
         }
     }
 
@@ -80,7 +94,6 @@ public class RadialMenuController : MonoBehaviour
             {
                 if (currentActiveOptions.TryGetValue(prevSelectedIndex, out RadialMenuItem item))
                 {
-                    Debug.Log($"attempt deselect {prevSelectedIndex}");
                     item.Deselect();
                 }
             }
@@ -93,6 +106,13 @@ public class RadialMenuController : MonoBehaviour
             prevSelectedIndex = selectedIndex;
         }
 
-        Debug.Log($"current selected: {selectedIndex}");
+    }
+
+    private void SetDescription(string text)
+    {
+        if(descriptionText != null)
+        {
+            descriptionText.text = text;
+        }
     }
 }

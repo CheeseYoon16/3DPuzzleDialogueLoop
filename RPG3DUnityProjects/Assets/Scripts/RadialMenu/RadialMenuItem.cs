@@ -14,22 +14,27 @@ public class RadialMenuItem : MonoBehaviour
     [SerializeField] Color hoveredColor;
     [SerializeField] TextMeshProUGUI numberIndicator;
 
+    public UnityEvent<RadialMenuItemData> onSelected;
+    public UnityEvent<RadialMenuItemData> onDeselected;
+
     Image CircularBG => circularBackground;
     int itemID = -1;
+    RadialMenuItemData itemData = null;
 
-    [SerializeField] UnityEvent onSelected;
-    [SerializeField] UnityEvent onDeselected;
 
     private void OnEnable()
     {
         SetBGColor(baseColor);
     }
 
-    public void Init(int itemID, float size)
+    public void Init(RadialMenuItemData itemData, int itemID, float size)
     {
         SetCircularBG(size);
         this.itemID = itemID;
-        
+        this.itemData = itemData;
+
+        SetItemAttribute();
+
         if(numberIndicator != null )
         {
             numberIndicator.text = itemID.ToString();
@@ -48,13 +53,13 @@ public class RadialMenuItem : MonoBehaviour
     public void Select()
     {
         SetBGColor(hoveredColor);
-        onSelected?.Invoke();
+        onSelected?.Invoke(itemData);
     }
 
     public void Deselect()
     {
         SetBGColor(baseColor);
-        onDeselected?.Invoke();
+        onDeselected?.Invoke(itemData);
     }
 
     private void SetBGColor(Color color)
@@ -62,6 +67,14 @@ public class RadialMenuItem : MonoBehaviour
         if(CircularBG != null)
         {
             CircularBG.color = color;
+        }
+    }
+
+    private void SetItemAttribute()
+    {
+        if (iconHolder != null)
+        {
+            iconHolder.sprite = itemData.Icon;
         }
     }
 }
