@@ -14,15 +14,10 @@ public class RadialMenuItem : MonoBehaviour
     [SerializeField] Color hoveredColor;
     [SerializeField] TextMeshProUGUI numberIndicator;
 
-    [SerializeField] Transform rotatingGroup;
-    [SerializeField] RectTransform uprightGroup;
-    [SerializeField] float iconDistance = 100f;
-
     public UnityEvent<RadialMenuItemData> onSelected;
     public UnityEvent<RadialMenuItemData> onDeselected;
 
     Image CircularBG => circularBackground;
-
     int itemID = -1;
     RadialMenuItemData itemData = null;
 
@@ -40,7 +35,7 @@ public class RadialMenuItem : MonoBehaviour
 
         SetItemAttribute();
 
-        if (numberIndicator != null)
+        if(numberIndicator != null )
         {
             numberIndicator.text = itemID.ToString();
         }
@@ -48,8 +43,9 @@ public class RadialMenuItem : MonoBehaviour
 
     private void SetCircularBG(float size)
     {
-        if (CircularBG != null)
+        if(CircularBG != null)
         {
+            Debug.Log($"size delta is: {size}");
             CircularBG.fillAmount = size;
         }
     }
@@ -68,7 +64,7 @@ public class RadialMenuItem : MonoBehaviour
 
     private void SetBGColor(Color color)
     {
-        if (CircularBG != null)
+        if(CircularBG != null)
         {
             CircularBG.color = color;
         }
@@ -81,27 +77,4 @@ public class RadialMenuItem : MonoBehaviour
             iconHolder.sprite = itemData.Icon;
         }
     }
-
-    public void SetRotation(Quaternion rotatingGroupRotation, Vector3 uprightGroupOffset)
-    {
-        if (rotatingGroup != null)
-        {
-            rotatingGroup.transform.localPosition = Vector3.zero;
-            rotatingGroup.transform.localRotation = rotatingGroupRotation;
-
-            if(uprightGroup != null)
-            {
-                uprightGroup.transform.localPosition = uprightGroupOffset;
-            }
-        }
-    }
-
-    public float GetUprightGroupDistance()
-    {
-        if (uprightGroup == null || rotatingGroup == null)
-            return 0;
-
-        return Vector3.Distance(uprightGroup.transform.position, rotatingGroup.transform.position);
-    }
 }
-
