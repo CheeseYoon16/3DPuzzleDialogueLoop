@@ -6,13 +6,13 @@ using TMPro;
 
 public class RadialMenuController : MonoBehaviour
 {
-    [SerializeField] List<RadialMenuItemData> radialMenuOptions = new List<RadialMenuItemData>();
+    List<RadialMenuItem> radialMenuOptions = new List<RadialMenuItem>();
     [SerializeField] Transform parentTransform = null;
     [SerializeField] TextMeshProUGUI descriptionText;
     [SerializeField] GameObject detailGameobject;
-    [SerializeField] RadialMenuItem itemOptionTemplate;
+    [SerializeField] float fillGap = 0.1f; // Gap in fill amount (0-1) between each menu item
 
-    public Vector2 normalizedMousePosition;
+    private Vector2 normalizedMousePosition;
     float currentAngle;
     float sizeDelta = 0;
     float angleStep = 0;
@@ -34,29 +34,47 @@ public class RadialMenuController : MonoBehaviour
         } 
     }
 
-    private void OnEnable()
+    [ContextMenu("Detect Radial Menu")]
+    public void DetectRadialMenuItem()
     {
+        radialMenuOptions = new List<RadialMenuItem>();
+
+        for(int i = 0; i < transform.childCount; i++)
+        {
+            RadialMenuItem menuItem = transform.GetChild(i).GetComponent<RadialMenuItem>();
+
+            if(menuItem!=null)
+            {
+                radialMenuOptions.Add(menuItem);
+            }
+
+        }
+
         GenerateMenu();
     }
 
     public void GenerateMenu()
     {
-        sizeDelta = 1f / radialMenuOptions.Count;
+        // Calculate fill amount with gaps
+        float totalGapFill = fillGap * radialMenuOptions.Count; // Total gap fill needed
+        float availableFill = 1f - totalGapFill; // Available fill for items
+        sizeDelta = availableFill / radialMenuOptions.Count; // Fill each item gets
+        
         angleStep = 360f / radialMenuOptions.Count;
         currentActiveOptions = new Dictionary<int, RadialMenuItem>();
 
         for (int i = 0; i < radialMenuOptions.Count; i++)
         {
-            RadialMenuItem spawned = Instantiate(itemOptionTemplate, ParentTransform);
-            spawned.Init(radialMenuOptions[i], i, sizeDelta);
-            spawned.transform.localRotation = Quaternion.Euler(0, 0, angleStep * i);
+            radialMenuOptions[i].transform.localRotation = Quaternion.Euler(0, 0, angleStep * i - 90f);
+            radialMenuOptions[i].Init(i, sizeDelta);
 
-            if(!currentActiveOptions.ContainsKey(i))
+
+            if (!currentActiveOptions.ContainsKey(i))
             {
-                currentActiveOptions.Add(i, spawned);
+                currentActiveOptions.Add(i, radialMenuOptions[i]);
             }
 
-            spawned.onSelected?.AddListener((x) =>
+            radialMenuOptions[i].onSelected?.AddListener((x) =>
             {
                 SetDescription(x.Description);
             });

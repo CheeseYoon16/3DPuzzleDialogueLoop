@@ -7,19 +7,21 @@ using TMPro;
 
 public class RadialMenuItem : MonoBehaviour
 {
+    [SerializeField] RadialMenuItemData itemData = null;
+
     [SerializeField] Image circularBackground;
     [SerializeField] Image iconHolder;
 
     [SerializeField] Color baseColor;
     [SerializeField] Color hoveredColor;
     [SerializeField] TextMeshProUGUI numberIndicator;
+    [SerializeField] Transform uprightGroup;
 
     public UnityEvent<RadialMenuItemData> onSelected;
     public UnityEvent<RadialMenuItemData> onDeselected;
 
     Image CircularBG => circularBackground;
     int itemID = -1;
-    RadialMenuItemData itemData = null;
 
 
     private void OnEnable()
@@ -27,11 +29,10 @@ public class RadialMenuItem : MonoBehaviour
         SetBGColor(baseColor);
     }
 
-    public void Init(RadialMenuItemData itemData, int itemID, float size)
+    public void Init(int itemID, float size)
     {
         SetCircularBG(size);
         this.itemID = itemID;
-        this.itemData = itemData;
 
         SetItemAttribute();
 
@@ -77,4 +78,5 @@ public class RadialMenuItem : MonoBehaviour
             iconHolder.sprite = itemData.Icon;
         }
     }
+
 }
