@@ -471,7 +471,7 @@ MonoBehaviour:
   detailGameobject: {fileID: 1663334759}
   itemOptionTemplate: {fileID: 7219979593596823446, guid: fd9d11943445bdb46aaa8a4134278698,
     type: 3}
-  normalizedMousePosition: {x: 0, y: 0}
+  gapWidth: 1
 --- !u!1 &910131418
 GameObject:
   m_ObjectHideFlags: 0
