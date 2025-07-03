@@ -29,17 +29,25 @@ public class RadialMenuItem : MonoBehaviour
         SetBGColor(baseColor);
     }
 
-    public void Init(int itemID, float size)
+    public void Init(int itemID)
     {
-        SetCircularBG(size);
         this.itemID = itemID;
-
-        SetItemAttribute();
 
         if(numberIndicator != null )
         {
             numberIndicator.text = itemID.ToString();
         }
+    }
+
+    public void Generate(Quaternion rotation, float size)
+    {
+        SetCircularBG(size);
+        if(uprightGroup != null)
+        {
+            uprightGroup.transform.localRotation = rotation;
+        }
+
+        SetItemAttribute();
     }
 
     private void SetCircularBG(float size)

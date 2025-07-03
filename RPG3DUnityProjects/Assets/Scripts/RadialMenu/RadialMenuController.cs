@@ -4,9 +4,10 @@ using UnityEngine;
 using UnityEngine.Events;
 using TMPro;
 
+
 public class RadialMenuController : MonoBehaviour
 {
-    List<RadialMenuItem> radialMenuOptions = new List<RadialMenuItem>();
+    [SerializeField] List<RadialMenuItem> radialMenuOptions = new List<RadialMenuItem>();
     [SerializeField] Transform parentTransform = null;
     [SerializeField] TextMeshProUGUI descriptionText;
     [SerializeField] GameObject detailGameobject;
@@ -15,7 +16,7 @@ public class RadialMenuController : MonoBehaviour
     private Vector2 normalizedMousePosition;
     float currentAngle;
     float sizeDelta = 0;
-    float angleStep = 0;
+    float angleStep { get {return  360f / radialMenuOptions.Count; } }
 
     int prevSelectedIndex = -1;
 
@@ -53,31 +54,46 @@ public class RadialMenuController : MonoBehaviour
         GenerateMenu();
     }
 
-    public void GenerateMenu()
+    private void Awake()
+    {
+        InitializeMenu();
+    }
+
+    public void InitializeMenu()
+    {
+        currentActiveOptions = new Dictionary<int, RadialMenuItem>();
+
+        if (radialMenuOptions.Count > 0)
+        {
+            for(int i = 0;i < radialMenuOptions.Count;i++)
+            {
+                radialMenuOptions[i].Init(i);
+
+                radialMenuOptions[i].onSelected?.AddListener((x) =>
+                {
+                    SetDescription(x.Description);
+                });
+
+                if (!currentActiveOptions.ContainsKey(i))
+                {
+                    currentActiveOptions.Add(i, radialMenuOptions[i]);
+                }
+            }
+        }
+    }
+
+    private void GenerateMenu()
     {
         // Calculate fill amount with gaps
         float totalGapFill = fillGap * radialMenuOptions.Count; // Total gap fill needed
         float availableFill = 1f - totalGapFill; // Available fill for items
         sizeDelta = availableFill / radialMenuOptions.Count; // Fill each item gets
-        
-        angleStep = 360f / radialMenuOptions.Count;
-        currentActiveOptions = new Dictionary<int, RadialMenuItem>();
 
         for (int i = 0; i < radialMenuOptions.Count; i++)
         {
-            radialMenuOptions[i].transform.localRotation = Quaternion.Euler(0, 0, angleStep * i - 90f);
-            radialMenuOptions[i].Init(i, sizeDelta);
-
-
-            if (!currentActiveOptions.ContainsKey(i))
-            {
-                currentActiveOptions.Add(i, radialMenuOptions[i]);
-            }
-
-            radialMenuOptions[i].onSelected?.AddListener((x) =>
-            {
-                SetDescription(x.Description);
-            });
+            float rotation = angleStep * i - 90f;
+            radialMenuOptions[i].transform.localRotation = Quaternion.Euler(0, 0, rotation);
+            radialMenuOptions[i].Generate(Quaternion.Euler(0,0, -rotation), sizeDelta);
         }
 
         if(detailGameobject!=null)
@@ -89,9 +105,10 @@ public class RadialMenuController : MonoBehaviour
     private void Update()
     {
         normalizedMousePosition = new Vector2(Input.mousePosition.x - Screen.width / 2, Input.mousePosition.y - Screen.height / 2); ; //make  the center in the middle of the screen
-        currentAngle = currentAngle = (Mathf.Atan2(normalizedMousePosition.y, normalizedMousePosition.x) * Mathf.Rad2Deg + 360 + 90) % 360; //Get the angle in radians then convert them to degrees
+        currentAngle = (Mathf.Atan2(normalizedMousePosition.y, normalizedMousePosition.x) * Mathf.Rad2Deg + 360 + 90) % 360; //Get the angle in radians then convert them to degrees
         currentAngle = (currentAngle + 360) % 360; //add with 360 to make the angle always counter clockwise, modulo to prevent exceed 360
 
+        Debug.Log(Mathf.FloorToInt(currentAngle / angleStep));
         SetRadialItemSelection(Mathf.FloorToInt(currentAngle / angleStep));
     }
 
